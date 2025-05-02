@@ -1,0 +1,10 @@
+{"question":"What positions did Eugenio hold at BBVA Group, and during which years?","ground_truth":"Senior Software Engineer at BBVA Group (2005–2021)"}
+{"question":"What was Eugenio’s role and tenure at Yofi, Inc.?","ground_truth":"Senior Data Engineer at Yofi, Inc. (2021–2023)"}
+{"question":"What degree does Eugenio hold and from which university?","ground_truth":"Systems Analyst in Computer Science from the University of Buenos Aires"}
+{"question":"Which programming languages are listed on Eugenio’s CV?","ground_truth":"Python, Node.js, JavaScript, TypeScript, HTML, CSS, Erlang, SQL"}
+{"question":"Which cloud platforms does Eugenio have experience with?","ground_truth":"Amazon Web Services (AWS) and Google Cloud Platform (GCP)"}
+{"question":"What is Eugenio’s current job title and employer as of 2024?","ground_truth":"Senior Software Developer at DataArt Solutions, Inc. (2024–Present)"}
+{"question":"Name the GenAI document‐processing project Eugenio worked on and its client.","ground_truth":"GenAI Advanced Document Processing with AI for LATAM Group"}
+{"question":"In his cover letter, which server-less platforms does Eugenio highlight?","ground_truth":"AWS Lambda and GCP Cloud Functions"}
+{"question":"What is Eugenio’s contact email and phone number?","ground_truth":"yevgry@gmail.com, +54 9 11 5388 2222"}
+{"question":"Which compliance standards does Eugenio mention he’s worked under?","ground_truth":"Vanta™ and SOC2™ compliance standards"}

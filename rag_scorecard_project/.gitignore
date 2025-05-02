@@ -1,0 +1,17 @@
+# Python
+*.pyc
+__pycache__/
+.env
+.venv/
+
+# Data & models
+data/
+results/
+*.faiss
+*.pkl
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
