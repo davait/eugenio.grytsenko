@@ -12,11 +12,9 @@ This repository implements a Retrieval-Augmented Generation (RAG) pipeline using
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/rag_scorecard_project.git
-cd rag_scorecard_project
+git clone git@github.com:davait/eugenio.grytsenko.git
+cd eugenio.grytsenko/rag_scorecard_project
 ```
-
-Make sure to replace `your-username` with the actual GitHub account or URL if hosting elsewhere.
 
 ---
 
@@ -137,4 +135,3 @@ Then open your browser at [http://localhost:8000](http://localhost:8000).
 ---
 
 Happy RAG’ing! 🎉
-Author: Eugenio Grytsenko <yevgry@gmail.com>
