@@ -5,7 +5,6 @@ __pycache__/
 .venv/
 
 # Data & models
-data/
 results/
 *.faiss
 *.pkl
