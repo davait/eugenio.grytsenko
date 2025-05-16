@@ -122,8 +122,30 @@ This is a great way to quickly test the API without needing any external tools l
 - Google Cloud Platform account
 - Google Cloud SDK installed
 - Docker installed locally
+- GitHub repository with the following secrets configured:
+  - `GCP_PROJECT_ID`: Your Google Cloud project ID
+  - `GCP_SA_KEY`: Service account key JSON for GCP authentication
+  - `DATABASE_URL`: PostgreSQL database connection URL
+  - `FRONTEND_URL`: Frontend URL (same as Cloud Run URL)
+  - `SECRET_KEY`: JWT secret key
+  - `ALGORITHM`: JWT algorithm
+  - `ACCESS_TOKEN_EXPIRE_MINUTES`: Token expiration time
 
-### Deployment Steps
+### Automated Deployment (CI/CD)
+The project includes a GitHub Actions workflow that automatically deploys to Google Cloud Run when changes are pushed to the main branch. The workflow:
+
+1. Runs tests for both backend and frontend
+2. Builds the Docker container
+3. Pushes the container to Google Container Registry
+4. Deploys to Cloud Run with the latest changes
+
+To set up CI/CD:
+1. Fork or clone this repository
+2. Configure the required secrets in your GitHub repository settings
+3. Push to the main branch to trigger the deployment
+
+### Manual Deployment Steps
+If you prefer to deploy manually, follow these steps:
 
 1. **Configure Google Cloud Project**
    ```bash
