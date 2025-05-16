@@ -84,13 +84,6 @@ npm start
 ```
 - Access the application at: [http://localhost:3000](http://localhost:3000)
 
-## Notes
-- If you see the message "MUI X Missing license key", you can switch to the free version of DataGrid (`@mui/x-data-grid`) if you do not need advanced features.
-- The default database is SQLite, but you can adapt the configuration for other engines.
-
-## License
-This project is for educational and demonstration purposes only.
-
 ## API Testing with Swagger (OpenAPI)
 
 You can easily test and explore the API endpoints using the built-in Swagger UI provided by FastAPI.
@@ -112,3 +105,8 @@ You can easily test and explore the API endpoints using the built-in Swagger UI 
 - Validate your payloads and see error messages in real time.
 
 This is a great way to quickly test the API without needing any external tools like Postman or curl.
+
+> ![API Docs](./screenshots/api_docs.png)
+
+## License
+This project is for educational and demonstration purposes only.
