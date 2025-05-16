@@ -76,6 +76,10 @@ uvicorn main:app --reload
 ```
 - Access the API documentation at: [http://localhost:8000/api/docs](http://localhost:8000/api/docs)
 
+> **Running Backend**
+>
+> ![Running Backend](./screenshots/running_backend.png)
+
 ### 3. Frontend (React)
 ```bash
 cd ../frontend
@@ -83,6 +87,10 @@ npm install
 npm start
 ```
 - Access the application at: [http://localhost:3000](http://localhost:3000)
+
+> **Running Frondend**
+>
+> ![Running Frondend](./screenshots/running_frontend.png)
 
 ## API Testing with Swagger (OpenAPI)
 
