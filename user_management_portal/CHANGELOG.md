@@ -56,6 +56,21 @@
 
 ---
 
+## [1.5.0] - Data Table Refactor & UX Improvements
+### Changed
+- Replaced the `DataGridPro` table (license required) with the free `DataGrid` version from MUI to avoid license warnings and simplify maintenance.
+- Attempted to implement a single table visually grouped by department (pivot table style) using custom rows, but found that the free `DataGrid` does not support group rows or custom headers between data.
+- Returned to a single table with all users and the "Department" column visible, allowing global search and pagination for all users.
+- Implemented a responsive search bar next to the "Create User" button that filters by username or email in real time.
+- Adjusted the layout so the search bar and button are responsive and user-friendly on both desktop and mobile.
+- Updated the project screenshots to reflect the new design and behavior of the data table.
+
+### Experience and decisions
+- Explored several alternatives for visual grouping (pivot/group by) in the table, but decided to prioritize user experience and compatibility with the free version of MUI.
+- Documented the limitation of the free MUI DataGrid regarding visual grouping, and left the door open for future improvements if a Pro license is acquired.
+
+---
+
 ## [Unreleased]
 ### Planned
 - Advanced search and filtering.

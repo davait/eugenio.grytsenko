@@ -90,3 +90,25 @@ npm start
 
 ## License
 This project is for educational and demonstration purposes only.
+
+## API Testing with Swagger (OpenAPI)
+
+You can easily test and explore the API endpoints using the built-in Swagger UI provided by FastAPI.
+
+### How to Access Swagger UI
+
+1. **Start the backend server** (if not already running):
+   ```bash
+   uvicorn backend.main:app --reload
+   ```
+2. **Open your browser and go to:**
+   
+   [http://localhost:8000/api/docs](http://localhost:8000/api/docs)
+
+### What You Can Do
+- View all available API endpoints, their methods, and required/requested data.
+- Try out requests directly from the browser (GET, POST, PUT, DELETE, etc.).
+- See example requests and responses for each endpoint.
+- Validate your payloads and see error messages in real time.
+
+This is a great way to quickly test the API without needing any external tools like Postman or curl.

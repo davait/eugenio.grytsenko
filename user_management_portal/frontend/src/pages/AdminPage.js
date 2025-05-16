@@ -14,8 +14,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  TextField,
 } from '@mui/material';
-import { DataGridPro } from '@mui/x-data-grid-pro';
+import { DataGrid } from '@mui/x-data-grid';
 import {
   Add as AddIcon,
   Edit as EditIcon,
@@ -32,6 +33,7 @@ const AdminPage = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     fetchUsers();
@@ -101,20 +103,22 @@ const AdminPage = () => {
     setDeleteDialogOpen(true);
   };
 
+  // Filtrar usuarios por username o email
+  const filteredUsers = users.filter((user) => {
+    const searchLower = search.toLowerCase();
+    return (
+      user.username.toLowerCase().includes(searchLower) ||
+      user.email.toLowerCase().includes(searchLower)
+    );
+  });
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'username', headerName: 'Username', width: 130 },
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'full_name', headerName: 'Full Name', width: 200 },
     { field: 'department', headerName: 'Department', width: 130 },
-    {
-      field: 'created_at',
-      headerName: 'Created At',
-      width: 180,
-      valueFormatter: (params) => {
-        return new Date(params.value).toLocaleString();
-      },
-    },
+    { field: 'created_at', headerName: 'Created At', width: 180, valueFormatter: (params) => new Date(params.value).toLocaleString() },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -145,19 +149,6 @@ const AdminPage = () => {
     },
   ];
 
-  const initialState = {
-    aggregation: {
-      model: {
-        department: 'group',
-      },
-    },
-    columns: {
-      columnVisibilityModel: {
-        id: false,
-      },
-    },
-  };
-
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -168,22 +159,34 @@ const AdminPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" component="h1">
-          User Management Dashboard
+      <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'stretch', sm: 'center' }} mb={3} gap={2}>
+        <Typography variant="h4" component="h1" sx={{ flex: 1 }}>
+          User Management
         </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            setIsEditing(false);
-            setSelectedUser(null);
-            setModalOpen(true);
-          }}
-        >
-          Create User
-        </Button>
+        <Box display="flex" flex={2} alignItems="center" gap={2}>
+          <TextField
+            type="search"
+            label="Search by username or email"
+            variant="outlined"
+            size="small"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            sx={{ minWidth: 200, flex: 1 }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={() => {
+              setIsEditing(false);
+              setSelectedUser(null);
+              setModalOpen(true);
+            }}
+            sx={{ whiteSpace: 'nowrap' }}
+          >
+            Create User
+          </Button>
+        </Box>
       </Box>
 
       {error && (
@@ -192,20 +195,15 @@ const AdminPage = () => {
         </Alert>
       )}
 
-      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+      <Paper sx={{ p: 2, mb: 2 }}>
         <Box sx={{ height: 600, width: '100%' }}>
-          <DataGridPro
-            rows={users}
+          <DataGrid
+            rows={filteredUsers}
             columns={columns}
-            initialState={initialState}
-            groupingColDef={{
-              headerName: 'Department',
-              width: 200,
-            }}
-            disableRowSelectionOnClick
-            experimentalFeatures={{
-              columnGrouping: true,
-            }}
+            pageSize={10}
+            rowsPerPageOptions={[5, 10, 25, 100]}
+            disableSelectionOnClick
+            autoHeight
           />
         </Box>
       </Paper>
@@ -242,4 +240,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage; 
+export default AdminPage;

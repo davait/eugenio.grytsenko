@@ -8,7 +8,6 @@ import {
   TextField,
   MenuItem,
   Box,
-  Alert,
 } from '@mui/material';
 
 const departments = ['Tech', 'RRHH', 'Sales'];
