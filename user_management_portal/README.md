@@ -22,8 +22,6 @@ The **User Management Portal** is a full-stack application for managing users wi
 >
 > ![Create User Validation](./screenshots/create_user_validation.png)
 
-*_(If you are reading this on GitHub, make sure the images are placed in the `screenshots/` folder at the root of the project. Replace the image filenames if needed to match your actual files.)_*
-
 ## Technologies Used
 
 - **Backend:** FastAPI, SQLAlchemy, SQLite, Pydantic, Passlib
