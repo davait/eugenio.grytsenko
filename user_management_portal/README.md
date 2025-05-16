@@ -116,5 +116,56 @@ This is a great way to quickly test the API without needing any external tools l
 
 > ![API Docs](./screenshots/api_docs.png)
 
+## Deployment to Google Cloud Run
+
+### Prerequisites
+- Google Cloud Platform account
+- Google Cloud SDK installed
+- Docker installed locally
+
+### Deployment Steps
+
+1. **Configure Google Cloud Project**
+   ```bash
+   gcloud config set project [YOUR-PROJECT-ID]
+   ```
+
+2. **Enable Required APIs**
+   ```bash
+   gcloud services enable cloudbuild.googleapis.com run.googleapis.com
+   ```
+
+3. **Build and Push Image**
+   ```bash
+   gcloud builds submit --tag gcr.io/[YOUR-PROJECT-ID]/user-management-portal
+   ```
+
+4. **Deploy to Cloud Run**
+   ```bash
+   gcloud run deploy user-management-portal \
+     --image gcr.io/[YOUR-PROJECT-ID]/user-management-portal \
+     --platform managed \
+     --region [YOUR-REGION] \
+     --allow-unauthenticated \
+     --set-env-vars="FRONTEND_URL=https://[YOUR-URL].run.app"
+   ```
+
+5. **Configure Database**
+   - Create a Cloud SQL (PostgreSQL) instance
+   - Update Cloud Run environment variables with database connection
+
+### Required Environment Variables
+- `DATABASE_URL`: PostgreSQL database connection URL
+- `FRONTEND_URL`: Frontend URL (same as Cloud Run URL)
+- `SECRET_KEY`: JWT secret key
+- `ALGORITHM`: JWT algorithm (default: "HS256")
+- `ACCESS_TOKEN_EXPIRE_MINUTES`: Token expiration time (default: 30)
+
+### Important Notes
+- Ensure the database is accessible from Cloud Run
+- Configure necessary firewall rules
+- Consider using Secret Manager for sensitive variables
+- The service will run on port 8080 by default
+
 ## License
 This project is for educational and demonstration purposes only.
