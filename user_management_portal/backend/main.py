@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from app.database import engine
 from app.models import user
 from app.routes import users
+from app.monitoring import router as monitoring_router
 
 # Configure logging
 logging.basicConfig(
@@ -50,7 +51,8 @@ logger.info("CORS middleware configured")
 
 # Include routers
 app.include_router(users.router)
-logger.info("User routes included")
+app.include_router(monitoring_router)
+logger.info("Routers included")
 
 @app.get("/")
 async def root():
