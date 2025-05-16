@@ -53,7 +53,7 @@ async def list_users(
             detail="Error retrieving users"
         )
 
-@router.post("/", response_model=UserResponse)
+@router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """
     Create a new user.
@@ -198,7 +198,7 @@ async def update_user(
             detail="Error updating user"
         )
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{user_id}", status_code=status.HTTP_200_OK)
 async def delete_user(user_id: int, db: Session = Depends(get_db)):
     """
     Delete a user.
