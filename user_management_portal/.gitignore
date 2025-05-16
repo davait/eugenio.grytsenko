@@ -36,6 +36,3 @@ yarn-error.log*
 .idea/
 *.sublime-workspace
 *.sublime-project
-
-# Screenshots and media (optional, if you want to keep them out)
-# /screenshots/ 
