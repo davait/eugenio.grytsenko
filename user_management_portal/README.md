@@ -191,3 +191,10 @@ If you prefer to deploy manually, follow these steps:
 
 ## License
 This project is for educational and demonstration purposes only.
+
+## Copyright and Author
+
+Copyright © 2025 Eugenio Grytsenko
+
+**Author:** Eugenio Grytsenko  
+**Email:** yevgry@gmail.com

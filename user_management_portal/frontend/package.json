@@ -1,6 +1,6 @@
 {
-  "name": "user-management-portal-frontend",
-  "version": "1.0.0",
+  "name": "user-management-portal",
+  "version": "1.6.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.3",

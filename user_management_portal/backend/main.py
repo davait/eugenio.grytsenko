@@ -33,7 +33,7 @@ except Exception as e:
 app = FastAPI(
     title="User Management API",
     description="API for managing users with FastAPI and SQLite",
-    version="1.0.0",
+    version="1.6.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc"
 )

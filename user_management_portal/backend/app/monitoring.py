@@ -76,7 +76,7 @@ async def health_check(db: Session = Depends(get_db)) -> Dict[str, Any]:
         return {
             "status": "healthy" if db_health["status"] == "healthy" else "unhealthy",
             "timestamp": datetime.utcnow().isoformat(),
-            "version": "1.0.0",
+            "version": "1.6.0",
             "components": {
                 "database": db_health,
                 "system": system_info
