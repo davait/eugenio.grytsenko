@@ -70,12 +70,20 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """
     try:
         # Check if email already exists
-        if db.query(User).filter(User.email == user.email).first():
-            raise HTTPException(status_code=400, detail="Email already registered")
+        existing_email = db.query(User).filter(User.email == user.email).first()
+        if existing_email:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Email '{user.email}' is already registered in the system"
+            )
         
         # Check if username already exists
-        if db.query(User).filter(User.username == user.username).first():
-            raise HTTPException(status_code=400, detail="Username already taken")
+        existing_username = db.query(User).filter(User.username == user.username).first()
+        if existing_username:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Username '{user.username}' is already taken"
+            )
         
         # Create new user
         hashed_password = pwd_context.hash(user.password)
@@ -91,11 +99,17 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(db_user)
         
+        logger.info(f"User created successfully: {db_user.username}")
         return db_user
+    except HTTPException:
+        raise
     except Exception as e:
         db.rollback()
-        logging.error(f"Error creating user: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error creating user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error while creating user"
+        )
 
 @router.get("/{user_id}", response_model=UserResponse)
 async def get_user(user_id: int, db: Session = Depends(get_db)):
