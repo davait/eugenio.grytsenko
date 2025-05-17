@@ -24,6 +24,7 @@ from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.core.chat_engine import CondensePlusContextChatEngine
 from llama_index.llms.huggingface import HuggingFaceLLM
 from llama_index.vector_stores.faiss import FaissVectorStore
+from tools import get_tools
 
 # Embeddings online/offline
 from llama_index.embeddings.google_genai import GoogleGenAIEmbedding
@@ -96,10 +97,12 @@ except ClientError as e:
         raise
 
 # 5) Chat engine
+tools = get_tools()
 chat_engine = CondensePlusContextChatEngine.from_defaults(
     llm=llm,
     retriever=index.as_retriever(similarity_top_k=TOP_K),
     memory_cls=lambda: ChatMemoryBuffer(token_limit=4096),
+    tools=tools,
     verbose=True,
 )
 
@@ -137,7 +140,14 @@ async def chat_endpoint(req: ChatRequest):
 
     try:
         with torch.inference_mode():
-            resp = chat_engine.chat(req.message)
+            if any(tool.name in req.message.lower() for tool in tools):
+                for tool in tools:
+                    if tool.name in req.message.lower():
+                        result = tool.run(req.message)
+                        resp = chat_engine.chat(f"Tool {tool.name} used. Result: {result}")
+                        break
+            else:
+                resp = chat_engine.chat(req.message)
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
 
