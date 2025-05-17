@@ -140,14 +140,23 @@ async def chat_endpoint(req: ChatRequest):
 
     try:
         with torch.inference_mode():
-            if any(tool.name in req.message.lower() for tool in tools):
-                for tool in tools:
-                    if tool.name in req.message.lower():
-                        result = tool.run(req.message)
-                        resp = chat_engine.chat(f"Tool {tool.name} used. Result: {result}")
-                        break
-            else:
+            # Check if the message is a tool request
+            tool_request = False
+            for tool in tools:
+                if tool.name in req.message.lower():
+                    tool_request = True
+                    try:
+                        # Extract the query from the message
+                        query = req.message.lower().replace(tool.name, "").strip()
+                        result = tool.run(query)
+                        resp = chat_engine.chat(f"I used the {tool.name} tool to find this information: {result}")
+                    except Exception as tool_error:
+                        resp = chat_engine.chat(f"Error using {tool.name}: {str(tool_error)}")
+                    break
+            
+            if not tool_request:
                 resp = chat_engine.chat(req.message)
+
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
 

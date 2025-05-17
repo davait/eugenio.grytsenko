@@ -2,7 +2,7 @@
 Custom tools implementation for RAG using LangChain
 """
 
-from typing import List, Optional
+from typing import List, Optional, Any
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
@@ -14,8 +14,8 @@ import json
 
 class WebSearchTool(BaseTool):
     """Tool for web search using DuckDuckGo"""
-    name = "web_search"
-    description = "Useful for searching current information on the web. Use it when you need recent or updated information."
+    name: str = "web_search"
+    description: str = "Useful for searching current information on the web. Use it when you need recent or updated information."
     
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         search = DuckDuckGoSearchRun()
@@ -23,8 +23,8 @@ class WebSearchTool(BaseTool):
 
 class WikipediaTool(BaseTool):
     """Tool for searching Wikipedia"""
-    name = "wikipedia"
-    description = "Useful for searching information on Wikipedia. Use it when you need factual or historical information."
+    name: str = "wikipedia"
+    description: str = "Useful for searching information on Wikipedia. Use it when you need factual or historical information."
     
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
@@ -32,8 +32,8 @@ class WikipediaTool(BaseTool):
 
 class WeatherTool(BaseTool):
     """Tool for getting current weather"""
-    name = "weather"
-    description = "Useful for getting current weather information. Requires a specific location."
+    name: str = "weather"
+    description: str = "Useful for getting current weather information. Requires a specific location."
     
     def _run(self, location: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         # Note: In a real implementation, you should use a weather API like OpenWeatherMap
@@ -46,8 +46,8 @@ class WeatherTool(BaseTool):
 
 class NewsTool(BaseTool):
     """Tool for getting recent news"""
-    name = "news"
-    description = "Useful for getting recent news about a specific topic."
+    name: str = "news"
+    description: str = "Useful for getting recent news about a specific topic."
     
     def _run(self, topic: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         try:

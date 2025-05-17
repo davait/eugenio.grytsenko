@@ -1,4 +1,4 @@
-# RAG Scorecard Project
+# RAG Scorecard Project (with tools)
 Author: Eugenio Grytsenko <yevgry@gmail.com>
 
 This repository implements a Retrieval-Augmented Generation (RAG) pipeline using FAISS for vector storage and either Google Gemini or HuggingFace embeddings. It includes:

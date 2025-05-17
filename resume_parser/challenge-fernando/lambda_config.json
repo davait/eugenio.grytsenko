@@ -1,0 +1,30 @@
+{
+    "FunctionName": "resume-processor",
+    "Runtime": "python3.9",
+    "Handler": "lambda_function.lambda_handler",
+    "Role": "arn:aws:iam::YOUR_ACCOUNT_ID:role/resume-processor-role",
+    "Timeout": 300,
+    "MemorySize": 512,
+    "Environment": {
+        "Variables": {
+            "DYNAMODB_TABLE": "resume_processing",
+            "S3_BUCKET": "uploads",
+            "GOOGLE_API_KEY": "YOUR_GOOGLE_API_KEY"
+        }
+    },
+    "Events": [
+        {
+            "Type": "DynamoDB",
+            "Properties": {
+                "Stream": {
+                    "Type": "DynamoDB",
+                    "Properties": {
+                        "StreamArn": "arn:aws:dynamodb:YOUR_REGION:YOUR_ACCOUNT_ID:table/resume_processing/stream/timestamp",
+                        "BatchSize": 1,
+                        "StartingPosition": "LATEST"
+                    }
+                }
+            }
+        }
+    ]
+} 

@@ -1,0 +1,101 @@
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+      - AWS_DEFAULT_REGION=us-east-1
+      - DYNAMODB_ENDPOINT=http://localstack:4566
+      - S3_ENDPOINT=http://localstack:4566
+    depends_on:
+      localstack:
+        condition: service_healthy
+
+  lambda:
+    build: ./lambda
+    environment:
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+      - AWS_DEFAULT_REGION=us-east-1
+      - DYNAMODB_ENDPOINT=http://localstack:4566
+      - S3_ENDPOINT=http://localstack:4566
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - AWS_LAMBDA_FUNCTION_MEMORY_SIZE=512
+      - AWS_LAMBDA_FUNCTION_TIMEOUT=300
+      - AWS_LAMBDA_LOG_LEVEL=DEBUG
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      localstack:
+        condition: service_healthy
+    command: tail -f /dev/null
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - default
+
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
+    volumes:
+      - dynamodb-data:/data
+
+  localstack:
+    image: localstack/localstack:3.0.2
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,dynamodb,dynamodbstreams,lambda
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DYNAMODB_IN_MEMORY=1
+      - DYNAMODB_SHARE_DB=1
+      - DYNAMODB_PORT=4566
+      - LAMBDA_PROVIDER_OVERRIDE=asf
+      - LAMBDA_RUNTIME_ENVIRONMENT_TIMEOUT=300
+      - LAMBDA_DOCKER_FLAGS=--platform linux/amd64
+      - LAMBDA_RUNTIME_IMAGE_MAPPING={"python3.9":"public.ecr.aws/lambda/python:3.9"}
+      - DNS_ADDRESS=8.8.8.8
+      - PERSISTENCE=1
+      - LAMBDA_INIT_DEBUG=1
+      - LAMBDA_DOCKER_NETWORK=lambda-resume-parser_default
+      - LAMBDA_MOUNT_CODE=True
+      - LAMBDA_INIT_USER=root
+      - LAMBDA_INIT_PATH=/var/runtime/bootstrap
+      - LAMBDA_INIT_BOOTSTRAP=/var/runtime/bootstrap
+      - LAMBDA_INIT_DELVE_PATH=/var/runtime/dlv
+      - LAMBDA_INIT_DELVE_PORT=40000
+      - TMPDIR=/var/lib/localstack/tmp
+      - LAMBDA_CODE_DIR=/var/task
+      - LAMBDA_REMOTE_DOCKER=false
+      - LAMBDA_EXECUTOR=docker
+    volumes:
+      - localstack-data:/var/lib/localstack
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./lambda:/var/task:ro"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+networks:
+  default:
+    name: lambda-resume-parser_default
+
+volumes:
+  dynamodb-data:
+  localstack-data: 
