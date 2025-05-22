@@ -13,3 +13,6 @@ requests
 aiofiles
 werkzeug
 sentence-transformers
+faiss-cpu
+symspellpy
+huggingface_hub[hf_xet]

@@ -8,7 +8,7 @@ class LocalityBase(BaseModel):
     province_id: int
     province_name: Optional[str] = None
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class UserBase(BaseModel):
     name: str
@@ -29,7 +29,7 @@ class User(UserBase):
     is_active: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ProductImageBase(BaseModel):
     filename: str
@@ -39,7 +39,7 @@ class ProductImage(ProductImageBase):
     product_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CategoryBase(BaseModel):
     name: str
@@ -47,7 +47,7 @@ class CategoryBase(BaseModel):
 class Category(CategoryBase):
     id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ProductBase(BaseModel):
     title: str
@@ -78,7 +78,7 @@ class Product(ProductBase):
     categories: List[Category]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Token(BaseModel):
     access_token: str

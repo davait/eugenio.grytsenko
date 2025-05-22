@@ -248,7 +248,7 @@ def get_products(
             if p.seller is None:
                 print(f"[DEBUG] Producto con id={p.id} sin seller, se omite del resultado.")
                 continue
-            prod_dict = ProductSchema.from_orm(p).dict()
+            prod_dict = ProductSchema.model_validate(p).model_dump()
             if p.locality:
                 loc_dict = prod_dict['locality']
                 loc_dict['province_name'] = p.locality.province.name if p.locality.province else None
@@ -323,7 +323,7 @@ def get_products(
         if p.seller is None:
             print(f"[DEBUG] Producto con id={p.id} sin seller, se omite del resultado.")
             continue
-        prod_dict = ProductSchema.from_orm(p).dict()
+        prod_dict = ProductSchema.model_validate(p).model_dump()
         if p.locality:
             loc_dict = prod_dict['locality']
             loc_dict['province_name'] = p.locality.province.name if p.locality.province else None
